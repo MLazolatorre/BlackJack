@@ -1,0 +1,19 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "black jack backend",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MLazolatorre/BlackJack.git"
+  },
+  "author": "marc lazo la torre",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MLazolatorre/BlackJack/issues"
+  },
+  "homepage": "https://github.com/MLazolatorre/BlackJack#readme"
+}
