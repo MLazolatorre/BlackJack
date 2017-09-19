@@ -7,6 +7,7 @@
 var app = require('../app');
 var debug = require('debug')('app:server');
 var http = require('http');
+//var MongoClient = require("mongodb").MongoClient;
 
 /**
  * Get port from environment and store in Express.
@@ -28,6 +29,13 @@ var server = http.createServer(app);
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
+
+
+/*MongoClient.connect("mongodb://localhost/", function(error, db) {
+    if (error) return funcCallback(error);
+
+    console.log("Connecté à la base de données locale");
+});*/
 
 /**
  * Normalize a port into a number, string, or false.
