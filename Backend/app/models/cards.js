@@ -63,26 +63,26 @@ const deck = [
 assert.ok(is.array(DECK));
 assert.ok(DECK.length === 52);
 
-function FinalDeck(numDeck){
+function finalDeck(numDeck){
     this.card = [];
     this.size = 0;
     var i;
     
-    for(i=0; i<numDeck; i++){
+    for(i=0; i < numDeck; i++){
         var newDeck = new Array(deck.length);
         var j;
+
         for(j=0; j<deck.length; j++){
             newDeck[i] = i;
         }
+
         shuffleDeck(newDeck);
+
         for (i=0; i<newDeck.length; i++) {
             this.cards.push(newDeck[i]);
         }
-
     }
 }
-
-
 
 function shuffleDeck(deck){
 
