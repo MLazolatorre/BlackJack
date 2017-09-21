@@ -13,6 +13,13 @@ router.get('/viewTables', function(req, res, next) {
 });
 
 /**
+ * create an new game table
+ */
+router.get('/createTables', function(req, res, next) {
+    res.render('index', { title: 'Express' });
+});
+
+/**
  * log a player
  */
 router.post('/login', function(req, res, next) {
