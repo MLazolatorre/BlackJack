@@ -4,11 +4,16 @@
 
 var express = require('express');
 var router = express.Router();
+var Tables = require('../controllers/Tables').tables;
+
+var tables = new Tables();
 
 /**
  * get information of the table
  */
 router.get('/viewTables', function(req, res, next) {
+    var a = tables.createAGame();
+    console.log(a);
     res.render('index', { title: 'Express' });
 });
 
