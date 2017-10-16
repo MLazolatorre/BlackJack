@@ -6,6 +6,9 @@ var express = require('express');
 var router = express.Router();
 var Tables = require('../controllers/Tables').tables;
 
+var MongoClient = require('mongodb').MongoClient;
+var url = "mongodb://localhost/Blackjackdb";
+
 var tables = new Tables();
 
 /**
@@ -17,18 +20,89 @@ router.get('/viewTables', function(req, res, next) {
     res.render('index', { title: 'Express' });
 });
 
+/* POST new user. */
+router.get('/login', function(req, res, next) {
+
+    var username = req.param('username');
+    var pwd = req.param('pwd');
+
+    MongoClient.connect(url, function(err, db) {
+        if (err) throw err;
+        var query = { username: username };
+        //Verify the username if it already exists.
+        db.collection("users").find(query).toArray(function(err, result) {
+            if (err) throw err;
+            if(result[0] != null){
+                res.send('Username already existed');
+                //res.send(result);
+                db.close();
+            }else{
+                var newuser = { username: username, pwd: pwd, money: "1000" };
+                db.collection("users").insertOne(newuser, function(err, res){
+                    if (err) throw err;
+                    console.log("1 document inserted");
+                    db.close();
+                });
+                //res.send('New document '.concat(username,' added'));
+                res.send(result);
+            }
+        });
+        
+    });
+    
+});
+
 /**
  * create an new game table
  */
 router.get('/createTables', function(req, res, next) {
+    /*var tablename = req.param('tablename');
+    var iduser = req.param('iduser');
+    var pwd = req.param('pwd');
+
+    MongoClient.connect(url, function(err, db) {
+        if (err) throw err;
+        var query = { name: tablename };
+        db.collection("table").find(query).toArray(function(err, result) {
+            if (err) throw err;
+            if(result[0] != null){
+                res.send('Tablename already existed');
+                //res.send(result);
+                db.close();
+            }else{
+                var newtable = { name: tablename, pwd: pwd, iduser: iduser };
+                db.collection("table").insertOne(newtable, function(err, res) {
+                    if (err) throw err;
+                    console.log("1 document inserted");
+                    db.close();
+                });
+                res.send(result);
+            }
+        });
+        
+    });
+
+    res.send('respond with a resource');*/
     res.render('index', { title: 'Express' });
 });
 
 /**
  * log a player
  */
-router.post('/login', function(req, res, next) {
-    res.render('index', { title: 'Express' });
+router.get('/singin', function(req, res, next) {
+    var username = req.param('username');
+    var pwd = req.param('pwd');
+
+    MongoClient.connect(url, function(err, db) {
+        if (err) throw err;
+        var query = { username: username, pwd: pwd };
+        db.collection("users").find(query).toArray(function(err, result) {
+            if (err) throw err;
+            console.log(result);
+            res.send(result);
+            db.close();
+        });
+    });
 });
 
 /**
