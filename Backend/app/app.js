@@ -5,8 +5,10 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+var MongoClient = require("mongodb").MongoClient;
 var index = require('./routes/index');
 var users = require('./routes/users');
+var tables = require('./routes/tables');
 
 var app = express();
 
@@ -24,6 +26,23 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/users', users);
+app.use('/tables', tables);
+
+MongoClient.connect("mongodb://localhost/Blackjackdb", function(err, db) {
+    if (err) throw err;
+    console.log("Database created!");
+    db.createCollection("users", function(err, res) {
+      if (err) throw err;
+      console.log("Collection Users created!");
+      db.close();
+    });
+    db.createCollection("table", function(err, res) {
+      if (err) throw err;
+      console.log("Collection Table created!");
+      db.close();
+    });
+
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
