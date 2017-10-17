@@ -14,10 +14,9 @@ var tables = new Tables();
 /**
  * get information of the table
  */
-router.get('/viewTables', function(req, res, next) {
-    var a = tables.createAGame();
-    console.log(a);
-    res.render('index', { title: 'Express' });
+router.get('/viewGames', function(req, res, next) {
+    res.send(tables.games);
+    //res.render('index', { title: 'Express' });
 });
 
 /* POST new user. */
@@ -52,44 +51,37 @@ router.get('/login', function(req, res, next) {
     
 });
 
+
 /**
  * create an new game table
  */
-router.get('/createTables', function(req, res, next) {
-    /*var tablename = req.param('tablename');
+router.get('/createGame', function(req, res, next) {
     var iduser = req.param('iduser');
-    var pwd = req.param('pwd');
+    var gamename = req.param('gamename');
+    var i;
+    var flag = new Boolean(false);
 
-    MongoClient.connect(url, function(err, db) {
-        if (err) throw err;
-        var query = { name: tablename };
-        db.collection("table").find(query).toArray(function(err, result) {
-            if (err) throw err;
-            if(result[0] != null){
-                res.send('Tablename already existed');
-                //res.send(result);
-                db.close();
-            }else{
-                var newtable = { name: tablename, pwd: pwd, iduser: iduser };
-                db.collection("table").insertOne(newtable, function(err, res) {
-                    if (err) throw err;
-                    console.log("1 document inserted");
-                    db.close();
-                });
-                res.send(result);
-            }
-        });
-        
-    });
+    for(i=0; i < tables.games.length; i++){
 
-    res.send('respond with a resource');*/
+        if(tables.games[i].gamename == gamename){
+            console.log('This name already exist.')
+            flag = new Boolean(true);
+            return;
+        }
+    }
+    if(flag == Boolean(false)){
+        var a = tables.createAGame(iduser,gamename);
+        console.log(a);
+    }
+    
+    
     res.render('index', { title: 'Express' });
 });
 
 /**
- * log a player
+ * sign a player
  */
-router.get('/singin', function(req, res, next) {
+router.get('/signin', function(req, res, next) {
     var username = req.param('username');
     var pwd = req.param('pwd');
 
@@ -113,16 +105,52 @@ router.post('/logout', function(req, res, next) {
 });
 
 /**
- * a player join the table
+ * UPDATE a player join the game
  */
-router.post('/joinTable', function(req, res, next) {
+router.get('/joinGame', function(req, res, next) {
+    var gamename = req.param('gamename');
+    var iduser = req.param('iduser');
+    var i;
+    var flag = new Boolean(false);
+
+    for(i=0; i < tables.games.length; i++){
+        
+        if(tables.games[i].gamename == gamename){
+
+            tables.games[i].addPlayer(iduser);
+            flag = new Boolean(true);
+            return;
+        }
+        
+    }
+    if(flag == Boolean(false)){
+        console.log('This Game not exists.')
+    }
     res.render('index', { title: 'Express' });
 });
 
 /**
- * a player leave the table
+ *  UPDATE a player leave the game
  */
-router.post('/leaveTable', function(req, res, next) {
+router.get('/leaveGame', function(req, res, next) {
+    var gamename = req.param('gamename');
+    var iduser = req.param('iduser');
+    var i;
+    var flag = new Boolean(false);
+
+    for(i=0; i < tables.games.length; i++){
+        
+        if(tables.games[i].gamename == gamename){
+
+            tables.games[i].removePlayer(iduser);
+            flag = new Boolean(true);
+            return;
+        }
+        
+    }
+    if(flag == Boolean(false)){
+        console.log('This Game not exists.')
+    }
     res.render('index', { title: 'Express' });
 });
 

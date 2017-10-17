@@ -3,24 +3,27 @@
  */
 
 var Game = require('../models/Game').game;
-
+var Deck = require('../models/cards').deck;
+var Player = require('../models/player').player;
 var games = [];
 
 /**
  *
  * @constructor
  */
-function Tables() {}
+function Tables() {
+	this.games = [];
+}
 
 /**
  * Create a new game
  * @param idPlayer
  * @returns {Game}
  */
-Tables.prototype.createAGame = function (idPlayer) {
-    var newParty = new Game(idPlayer);
-    games.push(newParty);
-
+Tables.prototype.createAGame = function (idPlayer, gamename) {
+    var newParty = new Game(idPlayer,gamename);
+    this.games.push(newParty);
+    
     return newParty;
 };
 
@@ -29,7 +32,7 @@ Tables.prototype.createAGame = function (idPlayer) {
  * @returns {Game[]}
  */
 Tables.prototype.getAllGames = function() {
-    return games;
+    return this.games;
 };
 
 /**

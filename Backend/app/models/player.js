@@ -1,7 +1,11 @@
 function Player(){
 	this.id;
-	this.name;
-	this.online = false;
+	this.username;
+	this.pwd;
 	this.hand = [];
 	this.money;
 }
+
+module.exports = {
+    player: Player,
+};
