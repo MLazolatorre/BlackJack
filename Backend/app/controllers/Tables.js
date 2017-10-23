@@ -2,7 +2,7 @@
  * Created by MARC LAZOLA TORRE on 21/09/2017.
  */
 
-var Game = require('../models/Game').game;
+var Game = require('../models/Game');
 
 var games = [];
 
@@ -45,6 +45,4 @@ Tables.prototype.getGameOfPlayer = function(idPlayer) {
     return null;
 };
 
-module.exports = {
-    tables: Tables,
-};
+module.exports = Tables;
