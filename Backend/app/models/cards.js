@@ -58,40 +58,46 @@ const deck = [
     { suit: 'spades', rank: 'King', value: 10 }
 ];
 
+function Deck() {
 
-// ensure the ordered deck is as expected
-assert.ok(is.array(DECK));
-assert.ok(DECK.length === 52);
-
-function finalDeck(numDeck){
-    this.card = [];
+    this.cards = [];
     this.size = 0;
+
+}
+// ensure the ordered deck is as expected
+/*assert.ok(is.array(DECK));
+assert.ok(DECK.length === 52);*/
+
+Deck.prototype.filDeck = function(numDeck){
+//function finalDeck(numDeck){
     var i;
     
     for(i=0; i < numDeck; i++){
-        var newDeck = new Array(deck.length);
         var j;
-
-        for(j=0; j<deck.length; j++){
-            newDeck[i] = i;
+        for(j=0; j < 52; j++){
+            this.cards.push(deck[j]);
+            this.size ++;
         }
-
-        shuffleDeck(newDeck);
-
-        for (i=0; i<newDeck.length; i++) {
-            this.cards.push(newDeck[i]);
-        }
+        
+        this.shuffleDeck();
     }
 }
 
-function shuffleDeck(deck){
-
+Deck.prototype.shuffleDeck = function(){
     var j, x, i;
-    for (i = deck.length; i; i--) {
+    for (i = this.cards.length; i; i--) {
         j = Math.floor(Math.random() * i);
-        x = deck[i - 1];
-        deck[i - 1] = deck[j];
-        deck[j] = x;
+        x = this.cards[i - 1];
+        this.cards[i - 1] = this.cards[j];
+        this.cards[j] = x;
     }
-
 }
+
+Deck.prototype.GiveACard = function(){
+    return this.cards.splice(1,1);
+}
+
+
+module.exports = {
+    deck: Deck,
+};
