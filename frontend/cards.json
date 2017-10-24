@@ -4,7 +4,7 @@
     "value1" : 11,
     "value2" : 1,
     "card_image" : "APique.png"
-  },
+    },
 
     {
       "name" : "As de carreau",
@@ -18,7 +18,253 @@
       "value1" : 11,
       "value2" : 1,
       "card_image" : "ATrefle.png"
+    },
+    {
+      "name" : "As de coeur",
+      "value1" : 11,
+      "value2" : 1,
+      "card_image" : "ACoeur.png"
+    },
+    {
+      "name" : "Roi de pique",
+      "value1" : 10,
+      "card_image" : "KPique.png"
+    },
+    {
+      "name" : "Roi de carreau",
+      "value1" : 10,
+      "card_image" : "KCar.png"
+    },
+    {
+      "name" : "Roi de trèfle",
+      "value1" : 10,
+      "card_image" : "KTrefle.png"
+    },
+    {
+      "name" : "Roi de coeur",
+      "value1" : 10,
+      "card_image" : "KCoeur.png"
+    },
+    {
+      "name" : "Dame de pique",
+      "value1" : 10,
+      "card_image" : "QPique.png"
+    },
+    {
+      "name" : "Dame de carreau",
+      "value1" : 10,
+      "card_image" : "QCar.png"
+    },
+    {
+      "name" : "Dame de trèfle",
+      "value1" : 10,
+      "card_image" : "QTrefle.png"
+    },
+    {
+      "name" : "Dame de coeur",
+      "value1" : 10,
+      "card_image" : "QCoeur.png"
+    },
+    {
+      "name" : "Valet de pique",
+      "value1" : 10,
+      "card_image" : "JPique.png"
+    },
+    {
+      "name" : "Valet de carreau",
+      "value1" : 10,
+      "card_image" : "JCar.png"
+    },
+    {
+      "name" : "Valet de trèfle",
+      "value1" : 10,
+      "card_image" : "JTrefle.png"
+    },
+    {
+      "name" : "Valet de coeur",
+      "value1" : 10,
+      "card_image" : "JCoeur.png"
+    },
+    {
+      "name" : "10 de pique",
+      "value1" : 10,
+      "card_image" : "10Pique.png"
+    },
+    {
+      "name" : "10 de carreau",
+      "value1" : 10,
+      "card_image" : "10Car.png"
+    },
+    {
+      "name" : "10 de trèfle",
+      "value1" : 10,
+      "card_image" : "10Trefle.png"
+    },
+    {
+      "name" : "10 de coeur",
+      "value1" : 10,
+      "card_image" : "10Coeur.png"
+    },
+    {
+      "name" : "9 de pique",
+      "value1" : 9,
+      "card_image" : "9Pique.png"
+    },
+    {
+      "name" : "9 de carreau",
+      "value1" : 9,
+      "card_image" : "9Car.png"
+    },
+    {
+      "name" : "9 de trèfle",
+      "value1" : 9,
+      "card_image" : "9Trefle.png"
+    },
+    {
+      "name": "9 de coeur",
+      "value1": 9,
+      "card_image": "9Coeur.png"
+    },
+    {
+      "name" : "8 de pique",
+      "value1" : 8,
+      "card_image" : "8Pique.png"
+    },
+    {
+      "name" : "8 de carreau",
+      "value1" : 8,
+      "card_image" : "8Car.png"
+    },
+    {
+      "name" : "8 de trèfle",
+      "value1" : 8,
+      "card_image" : "8Trefle.png"
+    },
+    {
+      "name": "8 de coeur",
+      "value1": 8,
+      "card_image": "8Coeur.png"
+    },
+    {
+      "name" : "7 de pique",
+      "value1" : 7,
+      "card_image" : "7Pique.png"
+    },
+    {
+      "name" : "7 de carreau",
+      "value1" : 7,
+      "card_image" : "7Car.png"
+    },
+    {
+      "name" : "7 de trèfle",
+      "value1" : 7,
+      "card_image" : "7Trefle.png"
+    },
+    {
+      "name": "7 de coeur",
+      "value1": 7,
+      "card_image": "7Coeur.png"
+    },
+    {
+      "name" : "6 de pique",
+      "value1" : 6,
+      "card_image" : "6Pique.png"
+    },
+    {
+      "name" : "6 de carreau",
+      "value1" : 6,
+      "card_image" : "6Car.png"
+    },
+    {
+      "name" : "6 de trèfle",
+      "value1" : 6,
+      "card_image" : "6Trefle.png"
+    },
+    {
+      "name": "6 de coeur",
+      "value1": 6,
+      "card_image": "6Coeur.png"
+    },
+    {
+      "name" : "5 de pique",
+      "value1" : 5,
+      "card_image" : "5Pique.png"
+    },
+    {
+      "name" : "5 de carreau",
+      "value1" : 5,
+      "card_image" : "5Car.png"
+    },
+    {
+      "name" : "5 de trèfle",
+      "value1" : 5,
+      "card_image" : "5Trefle.png"
+    },
+    {
+      "name": "5 de coeur",
+      "value1": 5,
+      "card_image": "5Coeur.png"
+    },
+    {
+      "name" : "4 de pique",
+      "value1" : 4,
+      "card_image" : "4Pique.png"
+    },
+    {
+      "name" : "4 de carreau",
+      "value1" : 4,
+      "card_image" : "4Car.png"
+    },
+    {
+      "name" : "4 de trèfle",
+      "value1" : 4,
+      "card_image" : "4Trefle.png"
+    },
+    {
+      "name": "4 de coeur",
+      "value1": 4,
+      "card_image": "4Coeur.png"
+    },
+    {
+      "name" : "3 de pique",
+      "value1" : 3,
+      "card_image" : "3Pique.png"
+    },
+    {
+      "name" : "3 de carreau",
+      "value1" : 3,
+      "card_image" : "3Car.png"
+    },
+    {
+      "name" : "3 de trèfle",
+      "value1" : 3,
+      "card_image" : "3Trefle.png"
+    },
+    {
+      "name": "3 de coeur",
+      "value1": 3,
+      "card_image": "3Coeur.png"
+    },
+    {
+      "name" : "2 de pique",
+      "value1" : 2,
+      "card_image" : "2Pique.png"
+    },
+    {
+      "name" : "2 de carreau",
+      "value1" : 2,
+      "card_image" : "2Car.png"
+    },
+    {
+      "name" : "2 de trèfle",
+      "value1" : 2,
+      "card_image" : "2Trefle.png"
+    },
+    {
+      "name": "2 de coeur",
+      "value1": 2,
+      "card_image": "2Coeur.png"
     }
-]
+  ]
 
 }
