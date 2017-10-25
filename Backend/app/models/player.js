@@ -90,4 +90,4 @@ class PlayerList {
 
 }
 
-module.exports = PlayerList;
+module.exports = new PlayerList ();
