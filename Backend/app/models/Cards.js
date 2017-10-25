@@ -62,9 +62,6 @@ const DECK = [
 ];
 
 class Deck {
-  shoe = [];
-  maxSize;
-
   constructor(numDecks) {
     this.shoe = [];     // holds all the cards
     this.maxSize = 0;

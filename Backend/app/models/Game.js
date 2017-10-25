@@ -13,18 +13,25 @@ const STATES = {
 };
 
 class Game {
-  id = nextTableId++;
-  players = {};
-  state = WAITING;
-  numDecks = 8;
-  Shoe = new Cards.Deck(this.numDecks);
-  betTimeMs = 60000;
-  betTimer = null;
-  dealersHand = [];
+
+  constructor() {
+    this.idTable = nextTableId++;
+    this.players = {};
+    this.state = WAITING;
+    this.numDecks = 8;
+    this.Shoe = new Cards.Deck(this.numDecks);
+    this.betTimeMs = 60000;
+    this.betTimer = null;
+    this.dealersHand = [];
+  }
+
+  get id() {
+    return this.idTable;
+  }
 
   view() {
     let data = {
-      id: this.id,
+      idTable: this.idTable,
       players: {}
     };
 
@@ -45,7 +52,7 @@ class Game {
     let numPlayers = 0;
 
     for (let p in this.players) {
-      data.players[this.players[p].id] = this.players[p].view(this.state);
+      data.players[this.players[p].idTable] = this.players[p].view(this.state);
       numPlayers++;
     }
 
@@ -67,7 +74,7 @@ class Game {
 
   addPlayer(playerId) {
     this.players[playerId] = Players.getById(playerId);
-    this.players[playerId].tableId = this.id;
+    this.players[playerId].tableId = this.idTable;
 
     if (this.numPlayers === 1) this.players[playerId].controlling = true;
 
@@ -116,7 +123,7 @@ class Game {
 
     if (!this.players[playerId]) throw new Error(`${playerId} is not at table ${this.tableId}`);
 
-    if (hand > 3) throw new Error(`Invalid hand specified: ${hand}`);
+    if (hand > 3) throw new Error(`InvalidTable hand specified: ${hand}`);
 
     if (hand > 1 && this.players[playerId].hand2 === 'undefined')
       throw new Error('Requested hit to hand2 when none exists');
@@ -151,7 +158,7 @@ class Game {
 
     if (!this.players[playerId]) throw new Error(`${playerId} is not at table ${this.tableId}`);
 
-    if (hand > 3) throw new Error('Invalid hand specified: ' + hand);
+    if (hand > 3) throw new Error('InvalidTable hand specified: ' + hand);
 
     if (hand > 1 && this.players[playerId].hand2 === 'undefined')
       throw new Error('Requested stand on hand2 when none exists');
@@ -238,7 +245,7 @@ class Game {
 
     // were done with the shoe for this hand, check to see if we are past the cut point, if so replace the shoe
     if (this.Shoe.pastCutPoint()) {
-      console.log(`Table ${this.id}'s shoe is past the cut-point, replacing shoe.`);
+      console.log(`Table ${this.idTable}'s shoe is past the cut-point, replacing shoe.`);
       this.Shoe = new Cards.Deck(this.numDecks);
     }
 
@@ -263,7 +270,7 @@ class Game {
         return;
       }
 
-      // dealer did not bust
+      // dealer didTable not bust
       if (player.busted) {
         console.log('Player busted!');
 
