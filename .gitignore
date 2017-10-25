@@ -58,5 +58,4 @@ typings/
 .env
 
 .idea/
-
-public/dist/
+**/**/public/dist/
