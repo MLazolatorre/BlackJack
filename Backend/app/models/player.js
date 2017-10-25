@@ -19,7 +19,6 @@ class Player {
   }
 }
 
-
 module.exports = {
     player: Player,
 };

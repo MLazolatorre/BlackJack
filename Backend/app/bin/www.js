@@ -7,10 +7,6 @@
 var app = require('../app');
 var debug = require('debug')('app:server');
 var http = require('http');
-var socket = require('../service/socketService');
-
-//var MongoClient = require("mongodb").MongoClient;
-var MongoClient = require("mongodb").MongoClient;
 
 /**
  * Get port from environment and store in Express.
