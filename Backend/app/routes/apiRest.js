@@ -14,7 +14,7 @@ var tables = new Tables();
  */
 router.get('/viewTables', function (req, res, next) {
   var a = {
-    response: tables.createAGame(),
+    response: tables,
   };
 
   console.log(querystring.parse(url.parse(req.url).query));
