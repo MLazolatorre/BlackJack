@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "dev": "webpack",
     "start": "node ./bin/www"
   },
   "dependencies": {
@@ -10,10 +11,23 @@
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.3",
     "express": "~4.15.2",
+    "file-system": "^2.2.2",
+    "fs": "0.0.1-security",
+    "is2": "^1.0.9",
+    "json-rest-api": "^0.1.1",
+    "mersenne-twister": "1.0.1",
     "mongodb": "~2.2.31",
     "morgan": "~1.8.1",
+    "net": "^1.0.2",
     "serve-favicon": "~2.4.2",
+    "tls": "0.0.1",
     "twig": "~0.10.3",
-    "mersenne-twister": "1.0.1"
+    "webpack": "^3.8.1"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.1",
+    "webpack": "^3.8.1"
   }
 }
