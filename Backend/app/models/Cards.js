@@ -1,4 +1,4 @@
-let MersenneTwister = require('mersenne-twister');
+const MersenneTwister = require('mersenne-twister');
 
 // MersenneTwister uses Date().getTime() as a default seed - good enough
 var generator = new MersenneTwister();
