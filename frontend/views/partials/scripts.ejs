@@ -18,6 +18,18 @@
         });
 
 
+        $("#bet-btn").click(function () {
+            var amount = prompt("quelle est votre mise?");
+            var test = isNaN(amount);
+            if (test == true) {
+                alert("veuillez entrer une valeur numérique!");
+            }
+            else {
+                $("#amount-bet").innerHTML = amount+"$";
+            }
+            console.log(amount);
+        })
+
         /* var source = "/images/2Car.png";
          var elem = document.createElement("img");
          elem.src = source;
