@@ -1,2 +1,34 @@
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.js"integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="crossorigin="anonymous"></script>
+<script>
+
+
+    $(document).ready(function () {
+
+
+        $("#deal_but").click(function(){
+
+
+            var element = $("#deck");
+            var des = $("#slot_2").position();
+            var init = $("#deck").position();
+            element.animate({left: des.left + element.width/2 - init.left+"px", top: des.top - init.top +"px"}, 1000);
+
+        });
+
+
+        /* var source = "/images/2Car.png";
+         var elem = document.createElement("img");
+         elem.src = source;
+         elem.setAttribute("height", "101.63");
+         elem.setAttribute("width", "70");
+         elem.setAttribute("alt", "Card");
+         elem.setAttribute("id", "n_card");
+         document.getElementById("up_space").appendChild(elem);*/
+
+
+        });
+
+
+</script>
