@@ -70,7 +70,8 @@ class Game {
   numInterested() {
     if (this.state !== BETTING && this.state !== DEALING) return 0;
 
-    return this.players.reduce((tmp, x) => (x.bet < 1 || x.busted || x.done) ? tmp : tmp + 1, 0);
+    return Object.keys(this.players).reduce((tmp, x) =>
+      (this.players[x].bet < 1 || this.players[x].busted || this.players[x].done) ? tmp : tmp + 1, 0);
   }
 
   addPlayer(playerId) {
