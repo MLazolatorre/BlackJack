@@ -1,9 +1,10 @@
 const is = require('is2');
 
 let nextPlayerId = 1;
+const COMPLETE = 3;
 
 class Player {
-  constructor(name, credit) {
+  constructor(name, credits) {
     this.id = nextPlayerId++;
     this.name = name;
     this.credits = credits;
@@ -47,6 +48,7 @@ class Player {
 
 class PlayerList {
   constructor() {
+    this.online = {};
     this.all = {};              // all players
     this.nameToId = {};    // map name to id
   }
@@ -60,8 +62,16 @@ class PlayerList {
   };
 
   login(name) {
+    console.log(this.nameToId);
     var playerId = this.nameToId[name];
-    if (!playerId) playerId = this.addPlayer(name);
+    console.log(this.nameToId);
+
+    if (!playerId){
+      playerId = this.addPlayer(name);
+
+      console.log(playerId);
+    }
+    console.log(this.online);
 
     this.online[playerId] = this.all[playerId];
     this.online[playerId].online = true;

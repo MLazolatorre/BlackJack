@@ -1,4 +1,5 @@
 const Cards = require('./Cards');
+const Players = require('./player');
 
 let nextTableId = 1;
 const WAITING = 0;
