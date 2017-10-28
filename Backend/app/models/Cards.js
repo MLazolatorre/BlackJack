@@ -98,9 +98,9 @@ class Deck {
   /**
    * Deal a card or cards from the shoe. The card should no longer be in the shoe.
    * @param {Number} [num] Optional number of cards to deal, if not present, deals 1.
-   * @return {Number|Number[]} Index into deck or an array of indicies
+   * @return {Number|Number[]} Card into deck or an array of Cards
    */
-  deal (num = 0) {
+  deal (num = 1) {
   if (this.shoe.length < num) throw new Error('Not enough cards to deal');
 
   if (num === 1) return this.shoe.shift();
