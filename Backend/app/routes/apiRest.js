@@ -32,14 +32,89 @@ router.post('/split', split);
  * log a player
  */
 function login(req, res, next) {
-  res.render('index', {title: 'Express'});
+  let id;
+  let tables;
+  let player;
+
+  const playerName = req.body.playerName;
+
+  if (!is.nonEmptyStr(playerName)) {
+    res.json({
+      success: false,
+      cmd: 'login',
+      error: 'Invalid name field: '+ playerName,
+    });
+    return;
+  }
+
+  try {
+    id  = Players.login(playerName);
+    player = Players.getById(id);
+    tables = Tables.viewTables();
+
+  } catch(err) {
+    console.error('/login %s', err.message);
+    console.error('/login stack %s', err.stack);
+    res.json({
+      success: false,
+      cmd: 'login',
+      error: err.message,
+      stack: err.stack
+    });
+
+    return;
+  }
+
+  var data = {
+    success: true,
+    cmd: 'login',
+    playerId: id,
+    player: player,
+    tables: tables
+  };
+
+  if (player.tableId !== -1 && is.positiveInt(player.tableId)) data.table = tables[player.tableId];
+
+  res.json(data);
 }
 
 /**
  * logout a player
  */
 function logout(req, res, next) {
-  res.render('index', {title: 'Express'});
+  const playerId = req.body.playerId;
+  const player = Players.getById(playerId);
+
+  const tableId = player.tableId;
+  const table = Tables.all[tableId];
+
+  try {
+    if (tableId !== -1) {
+      const hasId = Tables.all.hasOwnProperty(tableId);
+      if (hasId) {
+        table.rmPlayer(json.playerId);
+      }
+    }
+
+  } catch(err) {
+    console.error('/logout %s', err.message);
+    console.error('/logout stack %s', err.stack);
+
+    res.json({
+      success: false,
+      cmd: 'logout',
+      error: err.message,
+      stack: err.stack
+    });
+
+    return;
+  }
+
+  res.json({
+    success: true,
+    cmd: 'logout',
+    credits: info.player.credits
+  });
 }
 
 /**
@@ -81,11 +156,10 @@ function creationTable(req, res, next) {
 function joinTable(req, res, next) {
   const tableId = req.body.tableId;
   const playerId = req.body.playerId;
-  const json = req.body;
 
   let responseInfo;
   try {
-    console.log('joinTable json %j', json);
+    console.log('joinTable json %j', req.body);
 
     if (!is.obj(Tables.all[tableId])) {
       var err = new Error('There is no table with id: ' + tableId);
@@ -99,7 +173,7 @@ function joinTable(req, res, next) {
       return;
     }
     const table = Tables.getById(tableId);
-    table.addPlayer(player);
+    table.addPlayer(playerId);
 
     const tableView = table.view();
     const player = Players.getById(playerId);
@@ -108,7 +182,6 @@ function joinTable(req, res, next) {
       table: tableView,
       player: player,
     }
-
   } catch (err) {
     console.error('/joinTable %s', err.message);
     console.error('/joinTable stack %s', err.stack);
@@ -123,7 +196,8 @@ function joinTable(req, res, next) {
   res.json({
     success: true,
     cmd: 'joinTable',
-    ...responseInfo,
+    table: responseInfo.table,
+    player: responseInfo.player,
   });
 }
 
@@ -131,20 +205,19 @@ function joinTable(req, res, next) {
  * a player leave the table
  */
 function leaveTable(req, res, next) {
-  var tables;
-  var info;
+  const playerId = req.body.playerId;
+  const player = Players.getById(playerId);
+
+  const tableId = player.tableId;
+  const table = Tables.getById(tableId);
+  let tablesView;
   try {
-    info = getInfoFromReq(req, res, json, 'leaveTable', {table: true});
-    assert.ok(info !== false);
-    assert.ok(is.nonEmptyObj(info));
-    assert.ok(is.nonEmptyObj(info.table));
-    assert.ok(is.nonEmptyObj(info.player));
-    info.table.rmPlayer(json.playerId);
-    tables = Tables.viewTables();
-    assert.ok(info.player.tableId === -1);
-  } catch(err) {
-    logger.error('/leaveTable %s', err.message);
-    logger.error('/leaveTable stack %s', err.stack);
+    table.rmPlayer(playerId)
+    tablesView = Tables.viewTables();
+  } catch (err) {
+    console.error('/leaveTable %s', err.message);
+    console.error('/leaveTable stack %s', err.stack);
+
     res.json({
       success: false,
       cmd: 'leaveTable',
@@ -156,8 +229,8 @@ function leaveTable(req, res, next) {
   res.json({
     success: true,
     cmd: 'leaveTable',
-    player: info.player,
-    tables: tables
+    player: playerId,
+    tables: tablesView,
   });
 }
 
@@ -165,21 +238,116 @@ function leaveTable(req, res, next) {
  * a player bet an amount of money and keep his cards
  */
 function bet(req, res, next) {
-  res.render('index', {title: 'Express'});
+  const playerId = req.body.playerId;
+  const player = Players.getById(playerId);
+
+  const table = Tables.getById(player.tableId);
+  let tableView;
+  const bet = req.body.bet;
+  try {
+    if (bet > player.credits) {
+      const err = new Error('Bet amount ' + bet + ' is more than you ' + 'currently have: ' + player.credits);
+      res.json({
+        success: false,
+        cmd: 'bet',
+        error: err.message,
+        stack: err.stack
+      });
+      return;
+    }
+    table.bet(json.playerId, json.bet);
+    tableView = table.view();
+  } catch (err) {
+    console.error('/bet %s', err.message);
+    console.error('/bet stack %s', err.stack);
+
+    res.json({
+      success: false,
+      cmd: 'bet',
+      error: err.message,
+      stack: err.stack,
+    });
+
+    return;
+  }
+
+  res.json({
+    success: true,
+    cmd: 'bet',
+    player: player,
+    table: tableView,
+  });
 }
 
 /**
  * the player want another card
  */
 function hit(req, res, next) {
-  res.render('index', {title: 'Express'});
+  const playerId = req.body.playerId;
+  const player = Players.getById(playerId);
+
+  const tableId = player.tableId;
+  const table = Tables.getById(tableId);
+  let tableView;
+
+  try {
+    if (!is.positiveInt(json.hand))
+      json.hand = 1;
+    table.hit(playerId, req.body.hand);
+    tableView = table.view();
+  } catch (err) {
+    console.error('/hit %s', err.message);
+    console.error('/hit stack %s', err.stack);
+    res.json({
+      success: false,
+      cmd: 'hit',
+      error: err.message,
+      stack: err.stack
+    });
+
+    return;
+  }
+  var data = {
+    success: true,
+    cmd: 'hit',
+    player: player,
+    table: tableView,
+  };
+
+  res.json(data);
 }
 
 /**
  * the player keep his card and don't want more
  */
 function stand(req, res, next) {
-  res.render('index', {title: 'Express'});
+  const playerId = req.body.playerId;
+  const player = Players.getById(playerId);
+
+  const tableId = player.tableId;
+  const table = Tables.getById(tableId);
+  let tableView;
+
+  try {
+    table.stand(playerId, req.body.hand);
+    tableView = table.view();
+  } catch (err) {
+    logger.error('/stand %s', err.message);
+    logger.error('/stand stack %s', err.stack);
+    res.json({
+      success: false,
+      cmd: 'stand',
+      error: err.message,
+      stack: err.stack
+    });
+    return;
+  }
+  res.json({
+    success: true,
+    cmd: 'stand',
+    player: info.player,
+    table: table
+  });
 }
 
 /**
