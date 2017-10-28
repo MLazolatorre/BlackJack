@@ -179,19 +179,19 @@ class Game {
   maxPlayerScore() {
     let max = 0;
 
-    this.players.forEach((player) => {
-      player.score = Cards.scoreHand(player.hand);
+    Object.keys(this.players).forEach((player) => {
+      this.players[player].score = Cards.scoreHand(this.players[player].hand);
 
-      if (player.score > 21) {
-        console.log(`${player.name} busted with ${player.score}`);
-        player.busted = true;
+      if (this.players[player].score > 21) {
+        console.log(`${this.players[player].name} busted with ${this.players[player].score}`);
+        this.players[player].busted = true;
 
         return;
       }
 
-      player.busted = false;
+      this.players[player].busted = false;
 
-      if (player.score > max) max = player.score;
+      if (this.players[player].score > max) max = this.players[player].score;
     });
 
     console.log(`Max player score is ${max}`);
@@ -237,7 +237,9 @@ class Game {
     console.log(`Dealer busted ${dealerBusted}, dealer score: ${dealerScore}`);
 
     // handle bets
-    this.players.forEach((player) => {
+    Object.keys(this.players).forEach((p) => {
+      const player = this.players[p];
+
       if (dealerBusted) {         // dealer busted
         if (player.busted) {
           // push
@@ -282,7 +284,9 @@ class Game {
     });
 
     // store results in results for each player
-    this.players.forEach((player) => {
+    Object.keys(this.players).forEach((p) => {
+      const player = this.players[p];
+
       player.result = this.view();
       player.bet = -1;
 
