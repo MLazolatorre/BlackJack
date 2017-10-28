@@ -15,7 +15,6 @@ class Player {
     this.busted = false;
     this.done = false;
   }
-
   view(state) {
     const data = {
       name: this.name,
@@ -62,16 +61,8 @@ class PlayerList {
   };
 
   login(name) {
-    console.log(this.nameToId);
     var playerId = this.nameToId[name];
-    console.log(this.nameToId);
-
-    if (!playerId){
-      playerId = this.addPlayer(name);
-
-      console.log(playerId);
-    }
-    console.log(this.online);
+    if (!playerId) playerId = this.addPlayer(name);
 
     this.online[playerId] = this.all[playerId];
     this.online[playerId].online = true;
@@ -100,4 +91,4 @@ class PlayerList {
 
 }
 
-module.exports = new PlayerList ();
+module.exports = new PlayerList();
