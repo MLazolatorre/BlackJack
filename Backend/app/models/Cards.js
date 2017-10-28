@@ -143,8 +143,6 @@ function swap(deck, card1Idx, card2Idx) {
  * @return {Number} The value for the hand.
  */
 function evalHand(hand) {
-  console.log('in eval hand hand = %j', hand);
-
   // find the number of ace in the hand
   let numAces = hand.reduce((tmp, x) => x.rank === 'Ace' ? tmp + 1 : tmp, 0);
 
