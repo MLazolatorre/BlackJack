@@ -10,7 +10,7 @@ const is = require('is2');
 const Players = require('../models/player');
 const Tables = require('../controllers/Tables');
 
-
+router.post('/createAccount', createAccount);
 router.post('/login', login);
 router.post('/logout', logout);
 router.get('/viewTables', viewTable);
@@ -29,6 +29,45 @@ router.post('/split', split);
  */
 
 /**
+ * Create a player
+ */
+function createAccount(req, res, next) {
+  const pwd = req.body.pwd;
+  const name = req.body.name;
+  Players.checkAccountExist(pwd, name)
+    .then((result) => {
+      if (result) throw new Error('The account already exist');
+
+      Players.createAccount(pwd, name)
+    })
+    .then(() => {
+      const playerId = Players.addPlayer(name);
+      const player = Players.getById(playerId);
+
+      //here we are connected
+      const tables = Tables.viewTables();
+
+      res.json({
+        success: true,
+        cmd: 'createAccount',
+        playerId: playerId,
+        player: player,
+        tables: tables,
+      })
+    }).catch((err) => {
+    console.error('/createAccount %s', err.message);
+    console.error('/createAccount stack %s', err.stack);
+
+    res.json({
+      success: false,
+      cmd: 'createAccount',
+      error: err.message,
+      stack: err.stack
+    });
+  });
+}
+
+/**
  * log a player
  */
 function login(req, res, next) {
@@ -42,17 +81,17 @@ function login(req, res, next) {
     res.json({
       success: false,
       cmd: 'login',
-      error: 'Invalid name field: '+ playerName,
+      error: 'Invalid name field: ' + playerName,
     });
     return;
   }
 
   try {
-    id  = Players.login(playerName);
+    id = Players.login(playerName);
     player = Players.getById(id);
     tables = Tables.viewTables();
 
-  } catch(err) {
+  } catch (err) {
     console.error('/login %s', err.message);
     console.error('/login stack %s', err.stack);
     res.json({
@@ -96,7 +135,7 @@ function logout(req, res, next) {
       }
     }
 
-  } catch(err) {
+  } catch (err) {
     console.error('/logout %s', err.message);
     console.error('/logout stack %s', err.stack);
 

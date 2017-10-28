@@ -1,20 +1,32 @@
 const is = require('is2');
+const MongoClient = require("mongodb").MongoClient;
 
 let nextPlayerId = 1;
 const COMPLETE = 3;
+
+// on cree la bdd
+MongoClient.connect("mongodb://localhost/Blackjackdb", function (err, db) {
+  if (err) throw err;
+  console.log("Database created!");
+  db.createCollection("users", function (err, res) {
+    if (err) throw err;
+    console.log("Collection Users created!");
+    db.close();
+  });
+});
 
 class Player {
   constructor(name, credits) {
     this.id = nextPlayerId++;
     this.name = name;
     this.credits = credits;
-    this.online = false;
     this.tableId = -1;      // lobby
     this.bet = -1;          // not playing hand
     this.hand = [];
     this.busted = false;
     this.done = false;
   }
+
   view(state) {
     const data = {
       name: this.name,
@@ -47,9 +59,41 @@ class Player {
 
 class PlayerList {
   constructor() {
-    this.online = {};
     this.all = {};              // all players
     this.nameToId = {};    // map name to id
+  }
+
+  checkAccountExist(pwd, name) {
+    return new Promise((resolve, reject) => {
+      MongoClient.connect("mongodb://localhost/Blackjackdb", function (err, db) {
+        if (err) throw err;
+        db.collection("users").findOne({
+          pwd,
+          name,
+        }, (err, results) => {
+          if (err) reject(err)
+
+          resolve(results);
+        });
+      });
+    });
+  }
+
+  createAccount(pwd, name) {
+    return new Promise((resolve, reject) => {
+      MongoClient.connect("mongodb://localhost/Blackjackdb", function (err, db) {
+        if (err) throw err;
+        db.collection("users").insertOne({
+          pwd,
+          name,
+          credits: 1000,
+        }, null, (err, results) => {
+          if (err) throw reject(err);
+          resolve();
+          db.close();
+        });
+      });
+    });
   }
 
   addPlayer(name, credit = 1000) {
@@ -64,15 +108,11 @@ class PlayerList {
     var playerId = this.nameToId[name];
     if (!playerId) playerId = this.addPlayer(name);
 
-    this.online[playerId] = this.all[playerId];
-    this.online[playerId].online = true;
     return playerId;
   };
 
   logout(id) {
-    var player = this.online[id];
-    player.online = false;
-    delete this.online[id];
+    delete this.all[id];
     return player.credits;
   };
 
