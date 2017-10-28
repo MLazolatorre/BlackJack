@@ -17,13 +17,14 @@
 }
 
 #token-txt{
-    background: white;
     width: 40px;
     height: 20px;
     margin-top: 10px;
 }
 
 #amount-bet{
+    background: white;
+    width: auto;
     text-align: center;
     color: black;
 }
@@ -40,6 +41,9 @@
     float: left;
 }
 
+.bet-div{
+    position: relative;
+}
 
 .slots {
     width: 75px;
@@ -59,7 +63,7 @@
 
 #slot_3, .player3 {
     margin-left: 75%;
-    margin-top: -18.5rem;
+    margin-top: -18.7rem;
     text-align: center;
 }
 
