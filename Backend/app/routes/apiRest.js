@@ -54,28 +54,26 @@ function createAccount(req, res, next) {
         player: player,
         tables: tables,
       })
-    }).catch((err) => {
-    console.error('/createAccount %s', err.message);
-    console.error('/createAccount stack %s', err.stack);
+    })
+    .catch((err) => {
+      console.error('/createAccount %s', err.message);
+      console.error('/createAccount stack %s', err.stack);
 
-    res.json({
-      success: false,
-      cmd: 'createAccount',
-      error: err.message,
-      stack: err.stack
+      res.json({
+        success: false,
+        cmd: 'createAccount',
+        error: err.message,
+        stack: err.stack
+      });
     });
-  });
 }
 
 /**
  * log a player
  */
 function login(req, res, next) {
-  let id;
-  let tables;
-  let player;
-
   const playerName = req.body.playerName;
+  const pwd = req.body.pwd;
 
   if (!is.nonEmptyStr(playerName)) {
     res.json({
@@ -86,35 +84,35 @@ function login(req, res, next) {
     return;
   }
 
-  try {
-    id = Players.login(playerName);
-    player = Players.getById(id);
-    tables = Tables.viewTables();
+  Players.login(pwd, playerName)
+    .then((playerId) => {
+      player = Players.getById(playerId);
+      tables = Tables.viewTables();
 
-  } catch (err) {
-    console.error('/login %s', err.message);
-    console.error('/login stack %s', err.stack);
-    res.json({
-      success: false,
-      cmd: 'login',
-      error: err.message,
-      stack: err.stack
-    });
+      var data = {
+        success: true,
+        cmd: 'login',
+        playerId: playerId,
+        player: player,
+        tables: tables
+      };
 
-    return;
-  }
+      if (player.tableId !== -1 && is.positiveInt(player.tableId)) data.table = tables[player.tableId];
 
-  var data = {
-    success: true,
-    cmd: 'login',
-    playerId: id,
-    player: player,
-    tables: tables
-  };
+      res.json(data);
+    })
+    .catch((err) => {
+        console.error('/login %s', err.message);
+        console.error('/login stack %s', err.stack);
+        res.json({
+          success: false,
+          cmd: 'login',
+          error: err.message,
+          stack: err.stack
+        });
 
-  if (player.tableId !== -1 && is.positiveInt(player.tableId)) data.table = tables[player.tableId];
-
-  res.json(data);
+      }
+    );
 }
 
 /**

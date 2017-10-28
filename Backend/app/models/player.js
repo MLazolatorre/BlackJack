@@ -85,7 +85,7 @@ class PlayerList {
         if (err) throw err;
         db.collection("users").insertOne({
           pwd,
-          name,
+          name: name,
           credits: 1000,
         }, null, (err, results) => {
           if (err) throw reject(err);
@@ -104,11 +104,15 @@ class PlayerList {
     return player.id;
   };
 
-  login(name) {
-    var playerId = this.nameToId[name];
-    if (!playerId) playerId = this.addPlayer(name);
+  login(pwd, name) {
+    if (this.getByName(name)) throw new Error('This account is already connected');
 
-    return playerId;
+    return this.checkAccountExist(pwd, name)
+      .then((result) => {
+        if (!result) throw new Error('This account does\'t exist');
+
+        return this.addPlayer(name, result.credits);
+      });
   };
 
   logout(id) {
