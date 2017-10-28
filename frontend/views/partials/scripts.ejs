@@ -21,14 +21,20 @@
         $("#bet-btn").click(function () {
             var amount = prompt("quelle est votre mise?");
             var test = isNaN(amount);
-            if (test == true) {
-                alert("veuillez entrer une valeur numérique!");
+            if (test == true || amount <1 || amount > 9999) {
+                alert("veuillez entrer une valeur numérique comprise entre 1 et 9999!");
             }
             else {
-                $("#amount-bet").innerHTML = amount+"$";
+                document.getElementById("amount-bet").innerHTML = amount+"$";
             }
-            console.log(amount);
+
         })
+
+        $("#validate-btn").click(function () {
+            var tokens = $(".bet-div");
+            tokens.animate({left: "+=40px", top: "-=200px"}, 1000);
+        })
+
 
         /* var source = "/images/2Car.png";
          var elem = document.createElement("img");
