@@ -104,7 +104,10 @@ class Game {
     this.players[playerId].bet = bet;
 
     // if all players have bet then advance state of game
-    const everyOneHasBet = this.players.every((p) => (p && p.bet) ? true : false);
+    const everyOneHasBet = Object.keys(this.players).every((p) => {
+      console.log(`le joueur est %j`, this.players[p]);
+      return (this.players[p] && this.players[p].bet) ? true : false
+    });
 
     if (everyOneHasBet) {
       this.state = DEALING;
@@ -119,15 +122,10 @@ class Game {
    * @param playerId
    * @param hand
    */
-  hit(playerId, hand) {
+  hit(playerId) {
     if (this.state !== DEALING) throw new Error(`Attempt to hit when table is in state: ${STATES[this.state]}`);
 
     if (!this.players[playerId]) throw new Error(`${playerId} is not at table ${this.tableId}`);
-
-    if (hand > 3) throw new Error(`InvalidTable hand specified: ${hand}`);
-
-    if (hand > 1 && this.players[playerId].hand2 === 'undefined')
-      throw new Error('Requested hit to hand2 when none exists');
 
     console.log('In hit, bet is: ' + this.players[playerId].bet);
 
@@ -135,18 +133,12 @@ class Game {
 
     if (this.players[playerId].done) throw new Error('Requested hit when player has no interest in hand.');
 
-    let cardIdx;
+    this.players[playerId].hand.push(this.Shoe.deal());
 
-    if (hand === 1 || hand === 3) {
-      cardIdx = this.Shoe.deal();
-
-      this.players[playerId].hand.push(cardIdx);
-
-      if (Cards.isBusted(this.players[playerId].hand)) {
-        this.players[playerId].busted = true;
-        this.players[playerId].done = true;
-        this.credits -= this.bet;
-      }
+    if (Cards.isBusted(this.players[playerId].hand)) {
+      this.players[playerId].busted = true;
+      this.players[playerId].done = true;
+      this.credits -= this.bet;
     }
 
     console.log(`HIT: num interested: ${this.numInterested()}`);
@@ -154,25 +146,16 @@ class Game {
     if (this.numInterested() === 0) this.finishHand();
   }
 
-  stand(playerId, hand) {
+  stand(playerId) {
     if (this.state !== DEALING) throw new Error(`Attempt to stand when table is in state: ${STATES[this.state]}`);
 
     if (!this.players[playerId]) throw new Error(`${playerId} is not at table ${this.tableId}`);
-
-    if (hand > 3) throw new Error('InvalidTable hand specified: ' + hand);
-
-    if (hand > 1 && this.players[playerId].hand2 === 'undefined')
-      throw new Error('Requested stand on hand2 when none exists');
 
     if (this.players[playerId].bet < 1) throw new Error('Requested to stand when player has no bet.');
 
     if (this.players[playerId].done) throw new Error(`Requested to stand when player has no interest in ${hand}.`);
 
-    if (hand === 'undefined') hand = 1;
-
-    if (hand === 2 || hand === 3) this.players[playerId].done2 = true;
-
-    if (hand === 1 || hand === 3) this.players[playerId].done = true;
+    this.players[playerId].done = true;
 
     console.log(`STAND: num interested: ${this.numInterested()}`);
 
@@ -182,7 +165,7 @@ class Game {
   dealCards() {
     this.dealersHand = this.Shoe.deal(2);
 
-    this.players.forEach((x) => {
+    Object.keys(this.players).forEach((x) => {
       const player = this.players[x];
       console.log('Dealing to ' + player.name);
 
@@ -223,7 +206,7 @@ class Game {
    * @param maxScore
    * @returns {boolean}
    */
-  dealerMustDraw (maxScore) {
+  dealerMustDraw(maxScore) {
     let dealerScore = Cards.scoreHand(this.dealersHand);
     console.log(`dealerMustDraw: dealerScore ${dealerScore} <= maxScore ${maxScore} (${dealerScore <= maxScore})`);
 
@@ -233,7 +216,7 @@ class Game {
   /**
    * compute who win the party and add the credit to the winner
    */
-  finishHand () {
+  finishHand() {
     this.state = COMPLETE;
     var max = this.maxPlayerScore();
 
