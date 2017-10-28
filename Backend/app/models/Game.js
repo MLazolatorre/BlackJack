@@ -104,10 +104,7 @@ class Game {
     this.players[playerId].bet = bet;
 
     // if all players have bet then advance state of game
-    const everyOneHasBet = Object.keys(this.players).every((p) => {
-      console.log(`le joueur est %j`, this.players[p]);
-      return (this.players[p] && this.players[p].bet) ? true : false
-    });
+    const everyOneHasBet = Object.keys(this.players).every((p) => (this.players[p] && this.players[p].bet) ? true : false);
 
     if (everyOneHasBet) {
       this.state = DEALING;
