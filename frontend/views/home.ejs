@@ -10,15 +10,45 @@
 
     <body id="bg">
         <h1 class ="centered text">Welcome to your BlackJack table</h1>
-        //dealer deck
+        <!--dealer deck-->
         <div class="container centered" id="up_space">
-            <img src="/images/Dos.png" class="deck"/>
+            <img src="/images/Dos.png" id="deck"/>
+            </br>
+            <button id="deal_but">Deal</button>
         </div>
-        //
+        <!-********************************************-->
+
         <div>
 
-        </div>
+            <div class="player1">
+                <div class="slots" id="slot_1">
 
+                </div>
+            </div>
+
+            <div class="player2">
+                <div class="slots" id="slot_2">
+
+                </div>
+                <div class="bet-div">
+                    <img src="/images/jeton_yellow.jpg" class="rounded_image"><br>
+                    <div id="token-txt">
+                        <p id="amount-bet"></p>
+                    </div>
+                </div>
+                <button class="b2_cent" id="bet-btn">bet</button><br>
+                <button class="b2_cent">stand</button><br>
+                <button class="b2_cent">surrender</button>
+            </div>
+
+            <div class="player3">
+                <div class="slots" id="slot_3">
+
+                </div>
+
+            </div>
+
+        </div>
 
         <% include partials/scripts.ejs %>
     </body>
