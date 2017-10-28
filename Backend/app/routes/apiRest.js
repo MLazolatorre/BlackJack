@@ -241,9 +241,11 @@ function bet(req, res, next) {
   const playerId = req.body.playerId;
   const player = Players.getById(playerId);
 
+  const bet = req.body.bet;
+
   const table = Tables.getById(player.tableId);
   let tableView;
-  const bet = req.body.bet;
+
   try {
     if (bet > player.credits) {
       const err = new Error('Bet amount ' + bet + ' is more than you ' + 'currently have: ' + player.credits);
@@ -255,7 +257,7 @@ function bet(req, res, next) {
       });
       return;
     }
-    table.bet(json.playerId, json.bet);
+    table.bet(playerId, bet);
     tableView = table.view();
   } catch (err) {
     console.error('/bet %s', err.message);
@@ -291,9 +293,7 @@ function hit(req, res, next) {
   let tableView;
 
   try {
-    if (!is.positiveInt(json.hand))
-      json.hand = 1;
-    table.hit(playerId, req.body.hand);
+    table.hit(playerId);
     tableView = table.view();
   } catch (err) {
     console.error('/hit %s', err.message);
@@ -307,6 +307,7 @@ function hit(req, res, next) {
 
     return;
   }
+
   var data = {
     success: true,
     cmd: 'hit',
@@ -329,11 +330,11 @@ function stand(req, res, next) {
   let tableView;
 
   try {
-    table.stand(playerId, req.body.hand);
+    table.stand(playerId);
     tableView = table.view();
   } catch (err) {
-    logger.error('/stand %s', err.message);
-    logger.error('/stand stack %s', err.stack);
+    console.error('/stand %s', err.message);
+    console.error('/stand stack %s', err.stack);
     res.json({
       success: false,
       cmd: 'stand',
