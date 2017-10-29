@@ -1,5 +1,6 @@
 const is = require('is2');
 const MongoClient = require("mongodb").MongoClient;
+const emitter = require('../service/Emitter');
 
 let nextPlayerId = 1;
 const COMPLETE = 3;
@@ -114,7 +115,11 @@ class PlayerList {
       .then((result) => {
         if (!result) throw new Error('This account does\'t exist');
 
-        return this.addPlayer(name, result.credits);
+        const playerId = this.addPlayer(name, result.credits);
+
+        emitter.emit('login', playerId);
+
+        return playerId;
       });
   };
 
