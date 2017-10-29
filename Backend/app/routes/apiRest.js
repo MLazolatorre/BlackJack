@@ -34,11 +34,11 @@ router.post('/split', split);
 function createAccount(req, res, next) {
   const pwd = req.body.pwd;
   const name = req.body.name;
-  Players.checkAccountExist(pwd, name)
+  Players.checkAccountExist(name)
     .then((result) => {
       if (result) throw new Error('The account already exist');
 
-      Players.createAccount(pwd, name)
+      Players.createAccount(name, pwd);
     })
     .then(() => {
       const playerId = Players.addPlayer(name);
@@ -84,7 +84,7 @@ function login(req, res, next) {
     return;
   }
 
-  Players.login(pwd, playerName)
+  Players.login(playerName, pwd)
     .then((playerId) => {
       player = Players.getById(playerId);
       tables = Tables.viewTables();
@@ -130,6 +130,7 @@ function logout(req, res, next) {
       const hasId = Tables.all.hasOwnProperty(tableId);
       if (hasId) {
         table.rmPlayer(json.playerId);
+        Players.logout(playerId);
       }
     }
 
@@ -150,7 +151,7 @@ function logout(req, res, next) {
   res.json({
     success: true,
     cmd: 'logout',
-    credits: info.player.credits
+    credits: player.credits
   });
 }
 
@@ -383,8 +384,8 @@ function stand(req, res, next) {
   res.json({
     success: true,
     cmd: 'stand',
-    player: info.player,
-    table: table
+    player: player,
+    table: tableView,
   });
 }
 

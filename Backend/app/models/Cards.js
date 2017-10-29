@@ -100,28 +100,28 @@ class Deck {
    * @param {Number} [num] Optional number of cards to deal, if not present, deals 1.
    * @return {Number|Number[]} Card into deck or an array of Cards
    */
-  deal (num = 1) {
-  if (this.shoe.length < num) throw new Error('Not enough cards to deal');
+  deal(num = 1) {
+    if (this.shoe.length < num) throw new Error('Not enough cards to deal');
 
-  if (num === 1) return this.shoe.shift();
+    if (num === 1) return this.shoe.shift();
 
-  // case where num > 1
-  let cards = [];
-  for (let i = 0; i < num; i++) cards = [...cards, this.shoe.shift()];
+    // case where num > 1
+    let cards = [];
+    for (let i = 0; i < num; i++) cards = [...cards, this.shoe.shift()];
 
-  return cards;
-};
+    return cards;
+  };
 
   /**
    * True if dealt over 75% of the cards in the deck
    * @return {Boolean} true if past cut point and false otherwise
    */
-  pastCutPoint () {
-  var percentLeft = Math.floor((this.shoe.length / this.maxSize) * 100);
-  if (percentLeft < 25)
-    return true;
-  return false;
-};
+  pastCutPoint() {
+    var percentLeft = Math.floor((this.shoe.length / this.maxSize) * 100);
+    if (percentLeft < 25)
+      return true;
+    return false;
+  };
 
 }
 
@@ -161,10 +161,16 @@ function evalHand(hand) {
 /**
  * true if a hand's value is over 21, false otherwise.
  * @param {Object[]} hand An array of cards.
+ * @param {Boolean}  last Is the hidden cart cont in the eval
  * @return {Boolean} true if the hand has a value of over 21, false otherwise
  */
-function isBusted(hand) {
-  return evalHand(hand) > 21;
+function isBusted(hand, last = true) {
+  console.log("in isBusted");
+
+  const copie = hand.map((x) => x);
+  copie.shift();
+
+  return evalHand(last ? hand : copie) > 21;
 }
 
 /**

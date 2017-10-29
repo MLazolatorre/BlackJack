@@ -63,15 +63,18 @@ class PlayerList {
     this.nameToId = {};    // map name to id
   }
 
-  checkAccountExist(pwd, name) {
+  checkAccountExist(name, pwd = false) {
     return new Promise((resolve, reject) => {
       MongoClient.connect("mongodb://localhost/Blackjackdb", function (err, db) {
         if (err) throw err;
-        db.collection("users").findOne({
-          pwd,
+        const user = {
           name,
-        }, (err, results) => {
-          if (err) reject(err)
+        };
+
+        if (pwd) user.pwd = pwd;
+
+        db.collection("users").findOne(user, (err, results) => {
+          if (err) reject(err);
 
           resolve(results);
         });
@@ -79,7 +82,7 @@ class PlayerList {
     });
   }
 
-  createAccount(pwd, name) {
+  createAccount(name, pwd) {
     return new Promise((resolve, reject) => {
       MongoClient.connect("mongodb://localhost/Blackjackdb", function (err, db) {
         if (err) throw err;
@@ -88,7 +91,7 @@ class PlayerList {
           name: name,
           credits: 1000,
         }, null, (err, results) => {
-          if (err) throw reject(err);
+          if (err) reject(err);
           resolve();
           db.close();
         });
@@ -104,10 +107,10 @@ class PlayerList {
     return player.id;
   };
 
-  login(pwd, name) {
+  login(name, pwd) {
     if (this.getByName(name)) throw new Error('This account is already connected');
 
-    return this.checkAccountExist(pwd, name)
+    return this.checkAccountExist(name, pwd)
       .then((result) => {
         if (!result) throw new Error('This account does\'t exist');
 
@@ -116,12 +119,13 @@ class PlayerList {
   };
 
   logout(id) {
+    const player = this.all[id];
     delete this.all[id];
     return player.credits;
   };
 
   getByName(name) {
-    var playerId = this.nameToId[name];
+    const playerId = this.nameToId[name];
     if (is.undef(playerId)) return false;
 
     return this.all[playerId];

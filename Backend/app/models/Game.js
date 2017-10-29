@@ -133,7 +133,7 @@ class Game {
 
     this.players[playerId].hand.push(this.Shoe.deal());
 
-    if (Cards.isBusted(this.players[playerId].hand)) {
+    if (Cards.isBusted(this.players[playerId].hand, false)) {
       this.players[playerId].busted = true;
       this.players[playerId].done = true;
       this.credits -= this.bet;
