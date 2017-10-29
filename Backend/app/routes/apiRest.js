@@ -86,8 +86,8 @@ function login(req, res, next) {
 
   Players.login(playerName, pwd)
     .then((playerId) => {
-      player = Players.getById(playerId);
-      tables = Tables.viewTables();
+      const player = Players.getById(playerId);
+      const tables = Tables.viewTables();
 
       var data = {
         success: true,
