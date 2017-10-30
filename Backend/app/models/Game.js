@@ -1,5 +1,6 @@
 const Cards = require('./Cards');
 const Players = require('./player');
+const emitter = require('../service/Emitter');
 
 let nextTableId = 1;
 const WAITING = 0;
@@ -89,6 +90,8 @@ class Game {
     this.players[playerId].tableId = -1;
     delete this.players[playerId];
 
+    emitter.emit('playerLeaveTable', this.id, playerId);
+;
     if (this.numPlayers() === 0) this.state = WAITING;
   }
 
@@ -106,6 +109,8 @@ class Game {
 
     // if all players have bet then advance state of game
     const everyOneHasBet = Object.keys(this.players).every((p) => (this.players[p] && this.players[p].bet) ? true : false);
+
+    emitter.emit('bet', this.id, playerId, bet);
 
     if (everyOneHasBet) {
       this.state = DEALING;
@@ -131,13 +136,17 @@ class Game {
 
     if (this.players[playerId].done) throw new Error('Requested hit when player has no interest in hand.');
 
-    this.players[playerId].hand.push(this.Shoe.deal());
+    const newCard = this.Shoe.deal();
+
+    this.players[playerId].hand.push(newCard);
 
     if (Cards.isBusted(this.players[playerId].hand, false)) {
       this.players[playerId].busted = true;
       this.players[playerId].done = true;
       this.credits -= this.bet;
     }
+
+    emitter.emit('hit', playerId, newCard);
 
     console.log(`HIT: num interested: ${this.numInterested()}`);
 

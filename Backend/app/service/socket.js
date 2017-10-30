@@ -35,6 +35,12 @@ function listen (app){
     });
   });
 
+  emitter.on('playerLeaveTable', (room, playerId) => {
+    io.sockets.in(room).emit('playerLeaveTable', {
+      playerId
+    });
+  });
+
   emitter.on('allplay', (room) => {
     io.sockets.in(room).emit('allPlay');
   });
