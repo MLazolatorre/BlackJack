@@ -10,6 +10,7 @@
     "body-parser": "~1.17.1",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.3",
+    "ejs": "^2.5.7",
     "express": "~4.15.2",
     "file-system": "^2.2.2",
     "fs": "0.0.1-security",
@@ -20,8 +21,8 @@
     "morgan": "~1.8.1",
     "net": "^1.0.2",
     "serve-favicon": "~2.4.2",
+    "socket.io": "^2.0.4",
     "tls": "0.0.1",
-    "twig": "~0.10.3",
     "webpack": "^3.8.1"
   },
   "devDependencies": {
