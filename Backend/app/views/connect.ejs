@@ -4,17 +4,25 @@
 <head>
 
     <% include partials/head.ejs %>
-    <link rel="stylesheet" type="text/css" href="stylesheets/styles.css" />
+    <link rel="stylesheet" type="text/css" href="/stylesheets/styles.css" />
 </head>
 
 
 <body id="bg">
     <h1 class ="centered text">Welcome to your BlackJack table</h1>
-    <div class="container">
-        <div id="log">
-            <input type="text" name="id">
-            <input type="text" name="password">
-            <input type="submit" value="submit">
+    <div class="container" id="log">
+        <div id="login">
+            <h3>Login</h3>
+            <input type="text" name="id"><br>
+            <input type="password" name="password"><br>
+            <input type="submit" value="submit" id="loginSubmit">
+        </div>
+        <hr>
+        <div id="nAccount">
+            <h3>Create Account</h3>
+            <input type="text" name="id"><br>
+            <input type="password" name="password"><br>
+            <input type="submit" value="submit" id="nAccountSubmit">
         </div>
     </div>
 </body>

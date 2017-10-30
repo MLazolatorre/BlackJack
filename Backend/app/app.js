@@ -23,10 +23,15 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-
-///////////home//////////////
-app.get('/', routes.home);
+///////////Connection//////////////
+app.get('/', (req, res) => {
+  res.redirect('/blackJack/connect');
+});
 /////////////////////////
+
+app.get('/blackJack/connect', routes.connect);
+
+app.get('/blackJack/table', routes.home);
 
 app.use('/api', api);
 
