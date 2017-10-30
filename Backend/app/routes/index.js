@@ -1,4 +1,4 @@
-var cardsJSON = require ('../cards.json');
+var cardsJSON = require ('../../../frontend/cards.json');
 
 //home
 exports.home = function (req, res) {
