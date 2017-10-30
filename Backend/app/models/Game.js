@@ -81,6 +81,8 @@ class Game {
 
     if (this.numPlayers === 1) this.players[playerId].controlling = true;
 
+    emitter.emit('joinRoom', this.id);
+
     if (this.state === WAITING) this.startBetting();
   }
 
@@ -91,7 +93,7 @@ class Game {
     delete this.players[playerId];
 
     emitter.emit('playerLeaveTable', this.id, playerId);
-;
+
     if (this.numPlayers() === 0) this.state = WAITING;
   }
 
@@ -113,6 +115,7 @@ class Game {
     emitter.emit('bet', this.id, playerId, bet);
 
     if (everyOneHasBet) {
+      emitter.emit('allbet');
       this.state = DEALING;
       this.dealCards();
     } else {
@@ -140,7 +143,7 @@ class Game {
 
     this.players[playerId].hand.push(newCard);
 
-    if (Cards.isBusted(this.players[playerId].hand, false)) {
+    if (Cards.isBusted(this.players[playerId].hand)) {
       this.players[playerId].busted = true;
       this.players[playerId].done = true;
       this.credits -= this.bet;
@@ -166,7 +169,10 @@ class Game {
 
     console.log(`STAND: num interested: ${this.numInterested()}`);
 
-    if (this.numInterested() === 0) this.finishHand();
+    if (this.numInterested() === 0) {
+      emitter.emit('allplay', this.id);
+      this.finishHand();
+    }
   };
 
   dealCards() {

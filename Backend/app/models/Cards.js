@@ -161,16 +161,12 @@ function evalHand(hand) {
 /**
  * true if a hand's value is over 21, false otherwise.
  * @param {Object[]} hand An array of cards.
- * @param {Boolean}  last Is the hidden cart cont in the eval
  * @return {Boolean} true if the hand has a value of over 21, false otherwise
  */
-function isBusted(hand, last = true) {
+function isBusted(hand) {
   console.log("in isBusted");
 
-  const copie = hand.map((x) => x);
-  copie.shift();
-
-  return evalHand(last ? hand : copie) > 21;
+  return evalHand(hand) > 21;
 }
 
 /**
