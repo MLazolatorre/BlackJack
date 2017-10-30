@@ -1,5 +1,9 @@
 const request = require('./service/ajaxRequest');
 
+let me;
+let players;
+let tables;
+
 $(document).ready(function () {
 
   var amount;
@@ -46,7 +50,8 @@ window.login = function () {
     if (!body.success) {
       document.getElementById("errorLogin").style.display = "block";
     } else {
-      console.log(body);
+      getInfo(body);
+      window.location.replace("/blackJack/table");
     }
   });
 };
@@ -58,7 +63,21 @@ window.createAccount = function () {
     if (!body.success) {
       document.getElementById("errorCreateAccount").style.display = "block";
     } else {
-      console.log(body);
+      getInfo(body);
+      window.location.replace("/blackJack/table");
     }
   });
 };
+
+function getInfo(body) {
+  const player = body.player;
+
+  me = {
+    id: body.playerId,
+    credits: player.credits,
+    name: player.name,
+    tableId: player.tableId,
+  };
+
+  tables = body.tables;
+}
