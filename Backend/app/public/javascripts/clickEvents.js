@@ -56,7 +56,7 @@ window.createAccount = function () {
   const psw = document.getElementById("newPassword").value;
   request.createAccount(name, psw, (err, res, body) => {
     if (!body.success) {
-      document.getElementById("errorCreatAccount").style.display = "block";
+      document.getElementById("errorCreateAccount").style.display = "block";
     } else {
       console.log(body);
     }
