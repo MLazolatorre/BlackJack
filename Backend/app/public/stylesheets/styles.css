@@ -19,7 +19,7 @@
     height: 150px;
 }
 
-#log{
+.container{
     background: darkgray;
     width:500px;
     text-align: center;
@@ -113,4 +113,23 @@
 .error {
     color: red;
     display: none;
+}
+
+#tables {
+    display: flex;
+    flex-direction: column;
+}
+
+#table {
+    display: flex;
+    flex-direction: row;
+    background: darkgray;
+    justify-content: space-around;
+    align-items: center;
+    border-bottom: solid 1px black;
+}
+
+#table > .info {
+    display: flex;
+    flex-direction: column;
 }

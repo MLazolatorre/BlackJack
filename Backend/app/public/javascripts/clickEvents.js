@@ -1,8 +1,13 @@
 const request = require('./service/ajaxRequest');
+const Info = require('./service/Info');
+const mustache = require('mustache');
 
 let me;
-let players;
 let tables;
+let players;
+
+const tabletpl = $("#tables").html();
+$("#table").remove();
 
 $(document).ready(function () {
 
@@ -51,7 +56,9 @@ window.login = function () {
       document.getElementById("errorLogin").style.display = "block";
     } else {
       getInfo(body);
-      window.location.replace("/blackJack/table");
+      console.log("Logs are good, response :");
+      console.log(body);
+      showTables();
     }
   });
 };
@@ -64,7 +71,7 @@ window.createAccount = function () {
       document.getElementById("errorCreateAccount").style.display = "block";
     } else {
       getInfo(body);
-      window.location.replace("/blackJack/table");
+      showTables();
     }
   });
 };
@@ -81,3 +88,12 @@ function getInfo(body) {
 
   tables = body.tables;
 }
+
+function showTables() {
+  document.getElementById("log").remove();
+
+  tables.forEach((x) => {
+    let tpl = mustache.render(tabletpl, x);
+    $("#tables").append('<div class="table">' + tpl + '</div>');
+  });
+};

@@ -27,6 +27,17 @@
         <div id="errorCreateAccount" class="error">Account already exist</div>
     </div>
 </div>
+<div class="container" id="tables">
+    <div id="table">
+        <div class="info">
+            <p>Table n°{{ idTable }}</p>
+            <p>num player : {{ numPlayers }}</p>
+            <p>state : {{ state }}</p>
+        </div>
+        <button>Joint table</button>
+    </div>
+</div>
+
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>
@@ -35,6 +46,7 @@
         crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
         crossorigin="anonymous"></script>
+<script href="js/mustache.js"></script>
 
 <script src="/dist/bundle.js"></script>
 </body>
