@@ -77,3 +77,12 @@ function stand(playerId, cb) {
     cb(body);
   });
 }
+
+module.exports = {
+  createAccount: createAccount,
+  login: login,
+  joinTable: joinTable,
+  bet: bet,
+  hit: hit,
+  stand: stand,
+};
