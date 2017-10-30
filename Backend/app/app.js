@@ -5,7 +5,6 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 
-const MongoClient = require("mongodb").MongoClient;
 const api = require('./routes/apiRest');
 const routes = require('./routes/index');
 
@@ -24,20 +23,11 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-MongoClient.connect("mongodb://localhost/Blackjackdb", function(err, db) {
-    if (err) throw err;
-    console.log("Database created!");
-    db.createCollection("users", function(err, res) {
-      if (err) throw err;
-      console.log("Collection Users created!");
-      db.close();
-    });
-
-});
 
 ///////////home//////////////
 app.get('/', routes.home);
 /////////////////////////
+
 app.use('/api', api);
 
 // catch 404 and forward to error handler
