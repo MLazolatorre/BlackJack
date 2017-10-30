@@ -11,7 +11,7 @@ function createAccount(name, pwd, cb) {
       pwd,
     }
   }, function (err, res, body) {
-    cb(err, res, body);
+    cb(err, res, JSON.parse(body));
   });
 }
 
@@ -24,7 +24,7 @@ function login1(name, pwd, cb) {
       pwd,
     }
   }, function (err, res, body) {
-    cb(err, res, body);
+    cb(err, res, JSON.parse(body));
   });
 }
 
@@ -37,7 +37,7 @@ function joinTable (playerId, tableId, cb) {
       tableId,
     }
   }, function (err, res, body) {
-    cb(err, res, body);
+    cb(err, res, JSON.parse(body));
   });
 }
 
@@ -50,7 +50,7 @@ function bet(playerId, amount, cb) {
       amount,
     }
   }, function (err, res, body) {
-    cb(err, res, body);
+    cb(err, res, JSON.parse(body));
   });
 }
 
@@ -62,7 +62,7 @@ function hit(playerId, cb) {
       playerId,
     }
   }, function (err, res, body) {
-    cb(err, res, body);
+    cb(err, res, JSON.parse(body));
   });
 }
 
@@ -74,7 +74,7 @@ function stand(playerId, cb) {
       playerId,
     }
   }, function (err, res, body) {
-    cb(err, res, body);
+    cb(err, res, JSON.parse(body));
   });
 }
 
