@@ -15,7 +15,7 @@ function createAccount(name, pwd, cb) {
   });
 }
 
-function login(name, pwd, cb) {
+function login1(name, pwd, cb) {
   request({
     url: uri + 'login',
     method: 'POST',
@@ -80,7 +80,7 @@ function stand(playerId, cb) {
 
 module.exports = {
   createAccount: createAccount,
-  login: login,
+  login1: login1,
   joinTable: joinTable,
   bet: bet,
   hit: hit,

@@ -1,4 +1,4 @@
-const ajax = require('./service/ajaxRequest');
+const request = require('./service/ajaxRequest');
 
 $(document).ready(function () {
 
@@ -37,10 +37,20 @@ $(document).ready(function () {
 
     })
 
-    $("#loginSubmit").click(function(){
-
-    })
-
-
-
 });
+
+window.login = function(){
+    const name = document.getElementById("logId").value;
+    const psw = document.getElementById("logPassword").value;
+    request.login1(name, psw, (err, res, body) => {
+        console.log(body);
+    });
+};
+
+window.createAccount = function(){
+    const name = document.getElementById("newId").value;
+    const psw = document.getElementById("newPassword").value;
+    request.createAccount(name, psw, (err, res, body) => {
+        console.log(body);
+    });
+};
