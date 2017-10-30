@@ -44,9 +44,10 @@ window.login = function () {
   const psw = document.getElementById("logPassword").value;
   request.login1(name, psw, (err, res, body) => {
     if (!body.success) {
-      document.getElementById("logId").setAttribute("value", "text");
+      document.getElementById("errorLogin").style.display = "block";
+    } else {
+      console.log(body);
     }
-    console.log(body);
   });
 };
 
@@ -54,6 +55,10 @@ window.createAccount = function () {
   const name = document.getElementById("newId").value;
   const psw = document.getElementById("newPassword").value;
   request.createAccount(name, psw, (err, res, body) => {
-    console.log(body);
+    if (!body.success) {
+      document.getElementById("errorCreatAccount").style.display = "block";
+    } else {
+      console.log(body);
+    }
   });
 };

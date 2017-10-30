@@ -22,7 +22,6 @@
 #log{
     background: darkgray;
     width:500px;
-    height: 300px;
     text-align: center;
     margin-top: auto;
 }
@@ -108,4 +107,9 @@
 
 .text {
     color: aliceblue;
+}
+
+.error {
+    color: red;
+    display: none;
 }
