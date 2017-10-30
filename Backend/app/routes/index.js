@@ -1,21 +1,19 @@
-var cardsJSON = require ('../../../frontend/cards.json');
-
 //home
 exports.home = function (req, res) {
 
-    var cards = cardsJSON.cards;
-
     res.render('home.ejs', {
-        title : "BlackJack",
-        cards : cards
+        title : "BlackJack"
+    });
+};
+
+exports.connect = function (req, res) {
+    res.render('connect.ejs', {
+       title : "Login"
     });
 };
 
 exports.scripts = function (req, res) {
-    var cards = cardsJSON.cards;
-
     res.render('scripts.ejs', {
-        cards : cards
     });
 
 };

@@ -33,10 +33,12 @@ Le joueur pourra ensuite quitter une table et se déconnecter de l'application.
 
 Premièrement veuillez télécharger MongoDB via le lien ci-dessous en fonction de votre système d'exploitation.
 https://www.mongodb.com/download-center#community
+
 Pour démarrer MongoDB, exécutez le fichier mongod.exe (Windows) ou mongod (Unix), situé dans le dossier bin du dossier dans lequel MongoDB est installé. Lors de son lancement, MongoDB recherchera le dossier /data/bd à la racine de votre disque. Si ce dossier n'existe pas, créez-le.
+Vous pouvez créer le dossier /data/db ailleurs, il faudra cependant spécifier son emplacement en utilisant le paramètre --dbpath.
 Lors de l'execution du fichier, si la dernière ligne de commande affiche "waiting for connections", c'est que MongoDB est prêt à être utilisé.
 
-Ensuite téléchargez et installez Node JS et notre projet. Ensuite via un invité de commande, placer vous dans le dossier Backend/app du projet et exécutez les commandes suivantes afin d'installer les différentes dépendances du projet:
+Ensuite téléchargez et installez Node JS et notre projet. Verifier aussi que NPM est bien installé à la suite de l'installation de Node JS. Ensuite via un terminal, placez-vous dans le dossier Backend/app du projet et exécutez les commandes suivantes afin d'installer les différentes dépendances du projet:
 ```sh
 $ npm i
 $ npm dev
