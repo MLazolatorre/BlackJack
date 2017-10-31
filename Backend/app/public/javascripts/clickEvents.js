@@ -92,7 +92,13 @@ function showTables() {
   document.getElementById("log").remove();
 
   tables.forEach((x) => {
+    x.playerId = me.playerId;
     let tpl = mustache.render(tabletpl, x);
     $("#tables").append('<div class="table">' + tpl + '</div>');
   });
-};
+}
+
+ window.redirect = function(url) {
+    window.location.replace(url + "/" + me.id);
+    console.log(url);
+}
