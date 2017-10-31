@@ -1,5 +1,4 @@
 const request = require('./service/ajaxRequest');
-const Info = require('./service/Info');
 const mustache = require('mustache');
 
 let me;
@@ -95,5 +94,12 @@ function showTables() {
   tables.forEach((x) => {
     let tpl = mustache.render(tabletpl, x);
     $("#tables").append('<div class="table">' + tpl + '</div>');
+  });
+}
+
+window.enterTable = function (idTable, idPlayer) {
+  console.log('idtable = %d et idplayer = %d', idTable, idPlayer);
+  request.joinTable(idPlayer, idTable, (err, res, body) => {
+    console.log(body)
   });
 };

@@ -1,14 +1,15 @@
 //home
 exports.home = function (req, res) {
-
     res.render('home.ejs', {
-        title : "BlackJack"
+        title : "BlackJack",
+        idTable: req.params.idTable,
+        idPlayer: req.params.idPlayer,
     });
 };
 
 exports.connect = function (req, res) {
     res.render('connect.ejs', {
-       title : "Login"
+        title : "Login",
     });
 };
 
