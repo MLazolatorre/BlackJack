@@ -16,7 +16,7 @@
         <input type="text" name="id" id="logId"><br>
         <input type="password" name="password" id="logPassword"><br>
         <button id="loginSubmit" onclick="login()">submit</button>
-        <div id="errorLogin" class="error">Account dose not exist</div>
+        <div id="errorLogin" class="error">This account does not exist</div>
     </div>
     <hr>
     <div id="nAccount">
@@ -24,7 +24,7 @@
         <input type="text" name="id" id="newId"><br>
         <input type="password" name="password" id="newPassword"><br>
         <button id="nAccountSubmit" onclick="createAccount()">submit</button>
-        <div id="errorCreateAccount" class="error">Account already exist</div>
+        <div id="errorCreateAccount" class="error">This username is not available</div>
     </div>
 </div>
 <div class="container" id="tables">
@@ -34,7 +34,7 @@
             <p>num player : {{ numPlayers }}</p>
             <p>state : {{ state }}</p>
         </div>
-        <button>Joint table</button>
+        <button>Join table</button>
     </div>
 </div>
 

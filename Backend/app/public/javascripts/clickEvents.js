@@ -1,5 +1,4 @@
 const request = require('./service/ajaxRequest');
-const Info = require('./service/Info');
 const mustache = require('mustache');
 
 let me;
