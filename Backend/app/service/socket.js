@@ -49,8 +49,8 @@ function listen(app) {
     io.sockets.in(`/${room}`).emit('allPlay');
   });
 
-  emitter.on('allbet', () => {
-    io.sockets.in(`/${room}`).emit('allbet');
+  emitter.on('allbet', (room) => {
+    io.sockets.in(`/${room}`).emit('allbet', Tables.getById(room).view());
   });
 
   emitter.on('bet', (room, playerId, bet) => {

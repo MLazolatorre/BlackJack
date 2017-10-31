@@ -115,9 +115,9 @@ class Game {
     emitter.emit('bet', this.id, playerId, bet);
 
     if (everyOneHasBet) {
-      emitter.emit('allbet');
       this.state = DEALING;
-      this.dealCards();
+        this.dealCards();
+        emitter.emit('allbet', this.id);
     } else {
       console.log('Everyone has NOT bet!');
     }

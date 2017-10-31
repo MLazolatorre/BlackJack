@@ -47,7 +47,7 @@ function bet(playerId, amount, cb) {
     method: 'POST',
     data: {
       playerId,
-      amount,
+      bet: amount,
     }
   }, function (err, res, body) {
     cb(err, res, JSON.parse(body));
