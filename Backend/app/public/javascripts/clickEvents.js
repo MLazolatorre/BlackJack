@@ -101,4 +101,12 @@ function showTables() {
  window.redirect = function(url) {
     window.location.replace(url + "/" + me.id);
     console.log(url);
-}
+};
+
+window.enterTable = function (idTable, idPlayer) {
+  console.log('idtable = %d et idplayer = %d', idTable, idPlayer);
+  request.joinTable(idPlayer, idTable, (err, res, body) => {
+    console.log(body)
+  });
+};
+

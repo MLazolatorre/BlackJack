@@ -31,7 +31,7 @@ app.get('/', (req, res) => {
 
 app.get('/blackJack/connect', routes.connect);
 
-app.get('/blackJack/table', routes.home);
+app.get('/blackJack/table/:idTable/:idPlayer', routes.home);
 
 app.use('/api', api);
 

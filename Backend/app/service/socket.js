@@ -34,7 +34,7 @@ function listen(app) {
 
     // disconnect the player if we lose the connection
     socket.on('disconnect', () => {
-      if (playerId) Players.logout(playerId)
+      //if (playerId) Players.logout(playerId)
     });
   });
 
@@ -51,7 +51,7 @@ function listen(app) {
 
   emitter.on('allbet', () => {
     io.sockets.in(`/${room}`).emit('allbet');
-  })
+  });
 
   emitter.on('bet', (room, playerId, bet) => {
     console.log('socket : player %d bet %d on table %d', playerId, bet, room);
@@ -74,4 +74,4 @@ function listen(app) {
 
 module.exports = {
   listen: listen,
-}
+};
