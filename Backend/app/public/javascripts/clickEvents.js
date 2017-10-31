@@ -14,7 +14,7 @@ $(document).ready(function () {
   var money = $("#money");
   var reserve = 10000;
 
-  $("#deal_but").click(function () {
+  $("#hit-btn").click(function () {
 
     var element = $("#deck");
     var des = $("#slot_2").position();
@@ -36,16 +36,16 @@ $(document).ready(function () {
 
   })
 
-  $("#validate-btn").click(function () {
+/*  $("#validate-btn").click(function () {
     var tokens = $(".bet-div");
     tokens.animate({left: "+=40px", top: "-=200px"}, 1000);
 
     money.innerHTML = reserve - amount;
     reserve = reserve - amount;
 
-  })
+  })*/
 
-});
+
 
 window.login = function () {
   const name = document.getElementById("logId").value;
@@ -110,3 +110,21 @@ window.enterTable = function (idTable, idPlayer) {
   });
 };
 
+$("#validate-btn").click(function(){
+    $("#bet-btn").css("display", "none");
+    $("#validate-btn").css("display", "none");
+    $("#waiting-txt").css("display", "block");
+    request.bet(me.id, amount, (err, res, body) => {
+      console.log(body);
+    })
+});
+
+
+window.allBet = function() {
+      $("#hit-btn").css("display", "block");
+      $("#stand-btn").css("display", "block");
+      $("#waiting-txt").css("display", "none");
+
+};
+
+});

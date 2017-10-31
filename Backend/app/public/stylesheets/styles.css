@@ -52,6 +52,17 @@
 .bet-div{
     margin-left: -1rem;
     margin-top: -2rem;
+    position: relative;
+}
+
+#waiting-txt{
+    display: none;
+    margin-top: 3rem;
+    color: aliceblue;
+}
+
+#stand-btn{
+    display: none;
 }
 
 .rounded_image {
@@ -61,8 +72,8 @@
     float: left;
 }
 
-.bet-div{
-    position: relative;
+#bet-btn #validate-btn {
+    display: block;
 }
 
 .slots {
@@ -104,6 +115,10 @@
     background-image: url(../images/Dos.PNG);
     background-size: 75px 108.89px;
     background-repeat: no-repeat;
+}
+
+#hit-btn{
+    display: none;
 }
 
 .text {
