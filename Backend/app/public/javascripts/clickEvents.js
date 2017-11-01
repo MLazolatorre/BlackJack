@@ -4,11 +4,53 @@ const mustache = require('mustache');
 let me;
 let tables;
 let players;
+let newCardsId = [];
+
+const cardHeightPx = 101.63;
+const cardWidthPx = 70;
 
 const tabletpl = $("#tables").html();
 $("#table").remove();
 
+function youLoos() {
+  $("#result").show();
+  $("#loos").show();
+  $("#win").hide();
+  restart()
+}
+
+function restart() {
+
+  $("#hit-btn").hide();
+  $("#stand-btn").hide();
+
+
+  $("#bet-btn").show();
+  $("#validate-btn").show();
+
+  setTimeout(() => {
+    newCardsId.forEach((x) => {
+      $("#"+x).remove();
+    });
+    newCardsId = [];
+    $("#result").hide();
+    $("#loos").hide();
+    $("#win").hide();
+  }, 5000);
+
+}
+
+function youWin() {
+  $("#result").show();
+  $("#loos").hide();
+  $("#win").show();
+
+  restart()
+}
+
 $(document).ready(function () {
+
+  $("#result").hide();
 
     var amount;
     var money = $("#money");
@@ -17,26 +59,41 @@ $(document).ready(function () {
 
 
     $("#hit-btn").click(function () {
+        request.hit(me.id, (err, res, body) => {
+          let hand;
+          if (body.player.result) {
+            const array = body.player.result.players;
+            hand = array[Object.keys(array).filter((x) => array[x].id === me.id)[0]].hand;
+          }
+          else {
+            hand = body.player.hand;
+          }
+          hand.forEach((newCard, i) => {
+            if (i == hand.length - 1){
+              const newId = newCard.suit+newCard.rank+me.id+newCardsId.length;
+              newCardsId.push(newId);
 
-        const newCard =  {suit: 'Car', rank: '3', value: 3};
-        const newId = newCard.suit+newCard.rank+me.id;
-        //const des = $("#slot_2").position();
-        //const init = $("#deck").position();
-        //const element = $("#deck");
+              let source = "/images/"+newCard.rank+newCard.suit+".png";
+              let elem = document.createElement("img");
+              elem.src = source;
+              elem.setAttribute("height", `${cardHeightPx}`);
+              elem.setAttribute("width", `${cardWidthPx}`);
+              elem.setAttribute("alt", "Card");
+              elem.setAttribute("id", newId);
+              const marginRight = - i * cardWidthPx + i * 15;
+              const marginTop = - i * cardHeightPx;
+              elem.style.marginRight = marginRight + "px";
+              elem.style.marginTop = marginTop + "px";
+              $("#slot_2").append(elem);
+            }
+          });
 
-        let source = "/images/"+newCard.rank+newCard.suit+".png";
-        let elem = document.createElement("img");
-        elem.src = source;
-        elem.setAttribute("height", "101.63");
-        elem.setAttribute("width", "70");
-        elem.setAttribute("alt", "Card");
-        elem.setAttribute("id", newId);
-        $("#slot_2").append(elem);
-        console.log(source);
+          console.log(`le tableau d'id card = ${newCardsId}`);
 
-
-       // elem.animate({left: des.left + element.width / 2 - init.left + "px", top: des.top - init.top + "px"}, 1000);
-
+          if (body.player.result) {
+            youLoos()
+          }
+        });
     });
 
 
@@ -51,14 +108,20 @@ $(document).ready(function () {
         }
     });
 
-    /*  $("#validate-btn").click(function () {
-        var tokens = $(".bet-div");
-        tokens.animate({left: "+=40px", top: "-=200px"}, 1000);
+    $("#stand-btn").click(function () {
+      request.stand(me.id, (err, res, body) => {
+        console.log('quand on stand on ressoi : ');
+        console.log(body);
 
-        money.innerHTML = reserve - amount;
-        reserve = reserve - amount;
+        if (body.success) {
+          youWin();
+        }
+        else {
+          youLose();
+        }
 
-      })*/
+      })
+    });
 
 
     window.login = function () {
@@ -119,9 +182,25 @@ $(document).ready(function () {
 
         console.log("on veut parier : %d", amount);
 
-        request.bet(me.id, 100, (err, res, body) => {
-            console.log(body);
-        })
+        request.bet(me.id, amount, (err, res, body) => {
+            body.player.hand.forEach((newCard, i) => {
+                const newId = newCard.suit+newCard.rank+me.id+newCardsId.length;
+                newCardsId.push(newId);
+
+                let source = "/images/"+newCard.rank+newCard.suit+".png";
+                let elem = document.createElement("img");
+                elem.src = source;
+                elem.setAttribute("height", `${cardHeightPx}`);
+                elem.setAttribute("width", `${cardWidthPx}`);
+                elem.setAttribute("alt", "Card");
+                elem.setAttribute("id", newId);
+                const marginRight = - i * cardWidthPx + i * 15;
+                const marginTop = - i * cardHeightPx;
+                elem.style.marginRight = marginRight + "px";
+                elem.style.marginTop = marginTop + "px";
+                $("#slot_2").append(elem);
+            });
+        });
     });
 
 });

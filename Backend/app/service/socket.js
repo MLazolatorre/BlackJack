@@ -44,9 +44,9 @@ function listen(app) {
     });
   });
 
-  emitter.on('allplay', (room) => {
+  emitter.on('allplay', (room, tableView) => {
     console.log('Socket : all player played on table %d', room);
-    io.sockets.in(`/${room}`).emit('allPlay');
+    io.sockets.in(`/${room}`).emit('allplay', tableView);
   });
 
   emitter.on('allbet', (room) => {

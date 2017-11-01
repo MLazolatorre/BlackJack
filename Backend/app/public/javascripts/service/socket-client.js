@@ -17,10 +17,7 @@ socket.on('playerLeaveTable', (response) => {
 socket.on('allplay', (response) => {
   console.log('Socket : allplay');
   console.log(response);
-  if (allPlayedBool === false){
-
-    allPlayedBool = true;
-  }
+  allBetBool = false;
 });
 
 

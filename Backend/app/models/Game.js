@@ -170,7 +170,6 @@ class Game {
     console.log(`STAND: num interested: ${this.numInterested()}`);
 
     if (this.numInterested() === 0) {
-      emitter.emit('allplay', this.id);
       this.finishHand();
     }
   };
@@ -312,8 +311,9 @@ class Game {
       player.busted = false;
       player.done = false;
     });
-
     this.state = BETTING;
+
+    emitter.emit('allplay', this.id, this.view());
   };
 }
 
