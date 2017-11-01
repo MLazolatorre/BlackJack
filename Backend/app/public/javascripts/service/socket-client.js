@@ -18,6 +18,8 @@ socket.on('allplay', (response) => {
   console.log('Socket : allplay');
   console.log(response);
   allBetBool = false;
+
+  clickEvent.displayDealer(response);
 });
 
 

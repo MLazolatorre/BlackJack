@@ -225,6 +225,27 @@ function allBet() {
 
 }
 
+function displayDealer(response) {
+  response.dealer.hand.forEach((newCard, i) => {
+    const newId = newCard.suit+newCard.rank+me.id+newCardsId.length;
+    newCardsId.push(newId);
+
+    let source = "/images/"+newCard.rank+newCard.suit+".png";
+    let elem = document.createElement("img");
+    elem.src = source;
+    elem.setAttribute("height", `${cardHeightPx}`);
+    elem.setAttribute("width", `${cardWidthPx}`);
+    elem.setAttribute("alt", "Card");
+    elem.setAttribute("id", newId);
+    const marginRight = - i * cardWidthPx + i * 15;
+    const marginTop = - i * cardHeightPx;
+    elem.style.marginRight = marginRight + "px";
+    elem.style.marginTop = marginTop + "px";
+    $("#up_space").append(elem);
+  })
+}
+
 module.exports = {
     allBet: allBet,
+    displayDealer: displayDealer,
 }
