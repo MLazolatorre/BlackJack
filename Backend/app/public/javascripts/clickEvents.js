@@ -187,6 +187,7 @@ $(document).ready(function () {
         console.log("on veut parier : %d", amount);
 
         request.bet(me.id, amount, (err, res, body) => {
+            if (!body.success) return;
             body.player.hand.forEach((newCard, i) => {
                 const newId = newCard.suit+newCard.rank+me.id+newCardsId.length;
                 newCardsId.push(newId);
