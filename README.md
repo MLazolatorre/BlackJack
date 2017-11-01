@@ -39,6 +39,7 @@ Vous pouvez créer le dossier /data/db ailleurs, il faudra cependant spécifier 
 Lors de l'execution du fichier, si la dernière ligne de commande affiche "waiting for connections", c'est que MongoDB est prêt à être utilisé.
 
 Ensuite téléchargez et installez Node JS et notre projet. Verifier aussi que NPM est bien installé à la suite de l'installation de Node JS. Ensuite via un terminal, placez-vous dans le dossier Backend/app du projet et exécutez les commandes suivantes afin d'installer les différentes dépendances du projet:
+Aller dans le répertoir Backend/app
 ```sh
 $ npm i
 $ npm dev
