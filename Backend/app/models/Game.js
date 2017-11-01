@@ -146,7 +146,7 @@ class Game {
     if (Cards.isBusted(this.players[playerId].hand)) {
       this.players[playerId].busted = true;
       this.players[playerId].done = true;
-      this.credits -= this.bet;
+      this.credits -= Number(this.bet);
     }
 
     emitter.emit('hit', playerId, newCard);
@@ -263,7 +263,7 @@ class Game {
         } else {
           console.log('Players wins, dealer busted.');
           player.win = true;
-          player.credits += player.bet;
+          player.credits += Number(player.bet);
         }
         return;
       }
@@ -273,20 +273,20 @@ class Game {
         console.log('Player busted!');
 
         player.win = false;
-        player.credits -= player.bet;
+        player.credits -= Number(player.bet);
 
       } else {
         if (dealerScore > player.score) {
           console.log(`Dealer score is higher than ${player.name}'s score: ${dealerScore} > ${player.score}`);
 
           player.win = false;
-          player.credits -= player.bet;
+          player.credits -= Number(player.bet);
 
         } else if (dealerScore < player.score) {
           console.log(`${player.name}'s score is higher than dealer score: ${dealerScore} > ${player.score}`);
 
           player.win = true;
-          player.credits += player.bet;
+          player.credits += Number(player.bet);
 
         } else {
           console.log(`It's a push tie score at: ${dealerScore} = ${player.score}`);

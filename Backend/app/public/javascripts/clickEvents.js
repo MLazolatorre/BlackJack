@@ -48,6 +48,10 @@ function youWin() {
   restart()
 }
 
+function showMony(credits) {
+  document.getElementById("money").innerHTML = "You have " + credits + "$";
+}
+
 $(document).ready(function () {
 
   $("#result").hide();
@@ -119,7 +123,7 @@ $(document).ready(function () {
         else {
           youLose();
         }
-
+        showMony(body.player.credits);
       })
     });
 
@@ -214,6 +218,7 @@ window.enterTable = function (idTable, idPlayer) {
     console.log('idtable = %d et idplayer = %d', idTable, idPlayer);
     request.joinTable(idPlayer, idTable, (err, res, body) => {
         me = body.player;
+        showMony(body.player.credits);
         console.log(body);
     });
 };
